@@ -1,7 +1,5 @@
 # Functions-Errors
 
-# ErrorHandling Smart Contract
-
 ## Overview
 
 The `ErrorHandling` smart contract demonstrates the use of different error handling mechanisms in Solidity: `require`, `revert`, and `assert`. These mechanisms help in validating inputs and ensuring the contract's state remains consistent.
