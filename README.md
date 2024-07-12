@@ -2,7 +2,7 @@
 
 This Solidity smart contract demonstrates basic error handling in Ethereum's Solidity language. The contract includes the use of require, assert, and revert statements to ensure correct and secure functionality.
 
-#**Overview**
+# **Overview**
 
 The ErrorHandlingContract contract calculates the weight of an object given its mass, with error handling to ensure that only the contract owner can perform the calculation and that the inputs and outputs are valid.
 
