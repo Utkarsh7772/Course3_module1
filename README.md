@@ -1,59 +1,81 @@
-# Functions-Errors
+#ErrorHandlingContract
 
-## Overview
+This Solidity smart contract demonstrates basic error handling in Ethereum's Solidity language. The contract includes the use of require, assert, and revert statements to ensure correct and secure functionality.
 
-The `ErrorHandling` smart contract demonstrates the use of different error handling mechanisms in Solidity: `require`, `revert`, and `assert`. These mechanisms help in validating inputs and ensuring the contract's state remains consistent.
+#Overview
 
-## Contract Description
+The ErrorHandlingContract contract calculates the weight of an object given its mass, with error handling to ensure that only the contract owner can perform the calculation and that the inputs and outputs are valid.
 
-### State Variables
+#Features
 
-- **coinbalance (uint)**: This variable keeps track of the total coin balance.
-- **quotient (uint)**: This variable stores the result of a division operation.
+Owner Restriction: Only the contract owner can call the weight function.
+Error Handling: Uses require, assert, and revert statements to handle different error conditions.
 
-### Functions
+#Code Explanation
 
-#### RequireCheck
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.1;
 
-```solidity
-function RequireCheck(uint score, uint coins) public payable {
-    coinbalance += coins;
-    require(score >= 100, "Score is less than 100. Transaction not possible");
+contract ErrorHandlingContract {
+    // State variable to hold the constant value of gravity
+    uint private constant gravity = 10;
+
+    // State variable to hold the address of the contract owner
+    address private owner;
+
+    // Constructor to initialize the owner to the address that deploys the contract
+    constructor() {
+        owner = msg.sender;
+    }
+
+    // Function to calculate the weight of an object given its mass
+    function weight(uint _mass) public view returns (uint) {
+        // Require statement to ensure that only the owner can call this function
+        require(owner == msg.sender, "You are not the owner");
+
+        // Assert statement to ensure that the mass is greater than zero
+        assert(_mass > 0);
+
+        // Check to ensure that the calculated weight is non-negative
+        // This is to demonstrate the use of revert statement
+        if ((_mass * gravity) < 0) {
+            revert("Weight of the object cannot be zero");
+        }
+
+        // Return the calculated weight
+        return _mass * gravity;
+    }
 }
-```
 
-This function adds the provided `coins` to the `coinbalance`. It then checks if the `score` is at least 100 using the `require` statement. If the `score` is less than 100, the transaction is reverted with the message "Score is less than 100. Transaction not possible".
+#Detailed Breakdown
 
-#### RevertCheck
+State Variables
 
-```solidity
-error ThrowError(string);
-function RevertCheck(uint score, uint coins) public payable {
-    coinbalance += coins;
-    if (score < 100)
-        revert ThrowError("Score is less than 100. Transaction not possible");
-}
-```
+gravity: A constant value representing gravity, set to 10.
+owner: Stores the address of the contract owner who deployed the contract.
+Constructor
 
-This function also adds the provided `coins` to the `coinbalance`. It then checks if the `score` is at least 100. If the `score` is less than 100, the transaction is reverted using a custom error (`ThrowError`), providing a message "Score is less than 100. Transaction not possible".
+The constructor sets the owner to the address that deploys the contract using msg.sender.
 
-#### AssertCheck
+Weight Function
 
-```solidity
-function AssertCheck(uint a, uint b) public {
-    assert(b != 0);
-    quotient = a / b;
-}
-```
+Visibility: public view means this function can be called by anyone and does not modify the state.
+Parameters: Takes one parameter, _mass, representing the mass of the object.
+Require Statement: Ensures that only the owner can call this function. If the caller is not the owner, the function throws an error with the message "You are not the owner".
+Assert Statement: Ensures that the mass is greater than zero. If not, it throws an error.
+Revert Statement: Checks if the calculated weight is non-negative. If the weight calculation results in a negative value, it throws an error with the message "Weight of the object cannot be zero".
+Return Statement: Returns the calculated weight (_mass * gravity).
 
-This function performs a division of `a` by `b` and stores the result in `quotient`. Before the division, it uses the `assert` statement to ensure that `b` is not zero. If `b` is zero, the transaction is reverted, indicating a serious error in the code logic.
+#Deployment
 
-## Usage
+To deploy the contract, you can use Remix IDE, Truffle, or any other Ethereum development environment. Ensure that you have the necessary Ethereum client setup and a funded account to deploy the contract.
 
-1. **Deploy the Contract**: Deploy the `ErrorHandling` contract to the Ethereum blockchain.
+#Usage
+ 
+Deploy the contract using your Ethereum account.
+The account that deploys the contract becomes the owner.
+Only the owner can call the weight function to calculate the weight of an object given its mass.
 
-2. **RequireCheck**: Call the `RequireCheck` function with appropriate `score` and `coins` values. Ensure the `score` is at least 100 to avoid transaction failure.
+#License
 
-3. **RevertCheck**: Call the `RevertCheck` function with appropriate `score` and `coins` values. Ensure the `score` is at least 100 to avoid transaction failure.
-
-4. **AssertCheck**: Call the `AssertCheck` function with values `a` and `b`. Ensure `b` is not zero to avoid transaction failure.
+This project is licensed under the MIT License. See the LICENSE file for details.
