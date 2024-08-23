@@ -1,15 +1,15 @@
 **RailwayReservationSystem**
 This Solidity smart contract demonstrates a basic railway reservation system on the Ethereum blockchain. The contract allows users to create trains, book tickets, and check seat availability while ensuring secure and correct functionality through the use of require, assert, and revert statements.
 
-*Overview: *
+**Overview:**
 The RailwayReservationSystem contract enables the creation of trains, ticket bookings, and retrieval of booking and train details. Error handling ensures that valid data is provided, such as non-empty train names and valid seat numbers, while preventing actions like duplicate bookings.
 
-*Features: *
+**Features:**
 Train Management: Allows the creation of trains with a specific name and number of available seats.
 Ticket Booking: Users can book tickets for a specific train, ensuring that the train exists and seats are available.
 Error Handling: Uses require, assert, and revert statements to handle various error conditions, such as invalid train IDs or duplicate bookings.
 
-*Code*
+**Code:** 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
